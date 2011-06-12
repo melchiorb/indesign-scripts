@@ -13,13 +13,13 @@ function fuzzyIndex(list, string) {
 }
 
 function main() {  
-	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.interactWithAll;
-	
+  app.scriptPreferences.userInteractionLevel = UserInteractionLevels.interactWithAll;
+  
   if(app.documents.length > 0) {
-		styleOptionDialog();
-	} else {
-		alert("No documents are open. Please open a document and try again.");
-	}
+    styleOptionDialog();
+  } else {
+    alert("No documents are open. Please open a document and try again.");
+  }
 }
 
 function styleOptionDialog() {
@@ -45,31 +45,31 @@ function styleOptionDialog() {
   
   with(dialog.dialogColumns.add()) {
     with(dialogRows.add()){
-			with(dialogColumns.add()) {
-				staticTexts.add({ staticLabel: 'Search Range' });
-			}
-			
-			range = radiobuttonGroups.add();
-			with(range) {
-			  if(app.selection.length > 0) {
-			    radiobuttonControls.add({
-			      staticLabel: 'Document'
-			    });
-			    
-  				radiobuttonControls.add({
-  				  staticLabel: 'Selected Story',
-  				  checkedState: true
-  				});
-			  } else {
-  				radiobuttonControls.add({
-  				  staticLabel: 'Document',
-  				  checkedState: true
-  				});
-			  }
-			}			
-		}
-		
-		with(dialogRows.add()) {		  
+      with(dialogColumns.add()) {
+        staticTexts.add({ staticLabel: 'Search Range' });
+      }
+      
+      range = radiobuttonGroups.add();
+      with(range) {
+        if(app.selection.length > 0) {
+          radiobuttonControls.add({
+            staticLabel: 'Selected Story',
+            checkedState: true
+          });
+          
+          radiobuttonControls.add({
+            staticLabel: 'Document'
+          });
+        } else {
+          radiobuttonControls.add({
+            staticLabel: 'Document',
+            checkedState: true
+          });
+        }
+      }     
+    }
+    
+    with(dialogRows.add()) {      
       with(dialogColumns.add()) {
         staticTexts.add({ staticLabel: 'Headings' });
         
@@ -157,38 +157,38 @@ function styleOptionDialog() {
           }
         }
       }
-		}
-	}
-	
-	if(dialog.show()) {
-		styles.h1     = paragraphStyles[selected.h1.selectedIndex];
-		styles.h2     = paragraphStyles[selected.h2.selectedIndex];
-		styles.h3     = paragraphStyles[selected.h3.selectedIndex];
-		
-		styles.ol     = paragraphStyles[selected.ol.selectedIndex];
-		styles.ul     = paragraphStyles[selected.ul.selectedIndex];
-		
-		styles.em     = characterStyles[selected.em.selectedIndex];
-		styles.strong = characterStyles[selected.strong.selectedIndex];
-		styles.code   = characterStyles[selected.code.selectedIndex];
-		
-		switch(range.selectedButton){
-			case 0:
-				target = app.documents.item(0);
-				break;
-			case 1:
-				target = app.selection[0] ? app.selection[0].parentStory : null;
-				break;
-		}
-		
-		dialog.destroy();
-		
-		if(target) {
-		  markdown(target, styles);
-		}
-	} else {
-		dialog.destroy();
-	}
+    }
+  }
+  
+  if(dialog.show()) {
+    styles.h1     = paragraphStyles[selected.h1.selectedIndex];
+    styles.h2     = paragraphStyles[selected.h2.selectedIndex];
+    styles.h3     = paragraphStyles[selected.h3.selectedIndex];
+    
+    styles.ol     = paragraphStyles[selected.ol.selectedIndex];
+    styles.ul     = paragraphStyles[selected.ul.selectedIndex];
+    
+    styles.em     = characterStyles[selected.em.selectedIndex];
+    styles.strong = characterStyles[selected.strong.selectedIndex];
+    styles.code   = characterStyles[selected.code.selectedIndex];
+    
+    switch(range.selectedButton) {
+      case 0:
+        target = app.documents.item(0);
+        break;
+      case 1:
+        target = app.selection[0] ? app.selection[0].parentStory : null;
+        break;
+    }
+    
+    dialog.destroy();
+    
+    if(target) {
+      markdown(target, styles);
+    }
+  } else {
+    dialog.destroy();
+  }
 }
 
 function markdown(target, styles) {
@@ -250,9 +250,9 @@ function runGrep(target, options) {
   app.changeGrepPreferences.properties  = options.change;
   
   var foundItems = target.changeGrep();
-	
-	app.findGrepPreferences   = NothingEnum.nothing;
+  
+  app.findGrepPreferences   = NothingEnum.nothing;
   app.changeGrepPreferences = NothingEnum.nothing;
-	
-	return foundItems;
+  
+  return foundItems;
 }
